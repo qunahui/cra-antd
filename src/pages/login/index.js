@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from 'contexts/auth';
 import { Form, Input, Button, Row, Col } from 'antd';
 
 const Login = () => {
-  const { login, loading } = useAuth();
+  const history = useHistory();
+  const { login, user, loading } = useAuth();
+
+  useEffect(() => {
+    if (Object.keys(user)?.length > 0) {
+      history.push('/dashboard');
+    }
+  }, []);
 
   const onFinish = (values) => {
     login(values);

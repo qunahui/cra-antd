@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -13,12 +13,6 @@ export const AuthProvider = ({ children }) => {
   const storagedUser = JSON.parse(Cookies.get('user') || '{}');
   const [user, setUser] = useState(storagedUser);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (Object.keys(user)?.length > 0) {
-      history.push('/dashboard');
-    }
-  }, []);
 
   const login = async (params) => {
     setLoading(true);
