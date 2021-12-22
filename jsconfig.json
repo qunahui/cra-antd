@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "contexts": ["src/contexts"],
+      "components": ["src/components"],
+      "pages": ["src/pages"],
+      "styles": ["src/styles"],
+      "services": ["src/services"],
+      "hooks": ["src/hooks"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
