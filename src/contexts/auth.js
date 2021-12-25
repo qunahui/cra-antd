@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { isEmpty } from 'lodash';
 import { setToken } from 'src/services/graphqlClient';
-import { loginApi, whoAmI } from 'src/services/apis';
+import { loginApi, whoAmI, logout } from 'src/services/apis';
 
 const AuthContext = createContext({});
 
@@ -32,13 +32,6 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const logout = () => {
-    Cookies.remove('token');
-    Cookies.remove('user');
-    history.push('/');
-    window.location.reload();
   };
 
   return (

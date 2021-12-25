@@ -1,4 +1,5 @@
 import { graphQLClient } from './graphqlClient';
+import Cookies from 'js-cookie';
 import { gql } from 'graphql-request';
 
 const serializeRequest = (request) => {
@@ -13,6 +14,7 @@ const serializeRequest = (request) => {
     });
 };
 
+// authentication
 export const loginApi = (params) =>
   serializeRequest(
     graphQLClient.request(
@@ -57,4 +59,68 @@ export const whoAmI = () =>
         }
       }
     `)
+  );
+
+export const logout = () => {
+  Cookies.remove('token');
+  Cookies.remove('user');
+  window.location.push('/');
+  // window.location.reload();
+};
+
+//projects
+export const createProject = (params) =>
+  serializeRequest(
+    graphQLClient.request(
+      gql`
+        mutation createProject($params: CreateProjectDto!) {
+          createProject(project: $params) {
+            id
+            name
+            type
+            location
+            area
+            startDate
+            endDate
+          }
+        }
+      `,
+      {
+        params,
+      }
+    )
+  );
+
+export const getProject = (id) =>
+  serializeRequest(
+    graphQLClient.request(
+      gql`
+        query ($id: String!) {
+          project(id: $id) {
+            id
+            type
+            name
+            location
+            area
+            startDate
+            endDate
+            groups {
+              id
+              name
+              location
+              area
+              startDate
+              endDate
+              devices {
+                name
+                deviceSerial
+              }
+            }
+          }
+        }
+      `,
+      {
+        id,
+      }
+    )
   );
